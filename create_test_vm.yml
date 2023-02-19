@@ -1,0 +1,10 @@
+- name: Create a VM with existing storage account and NIC
+  azure_rm_virtualmachine:
+    resource_group: sk-centralus
+    name: testvm2
+    network_interfaces: sk-vnet-centralus
+    image:
+      offer: CentOS
+      publisher: OpenLogic
+      sku: '7.1'
+      version: latest
