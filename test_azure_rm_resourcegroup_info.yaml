@@ -1,7 +1,7 @@
 ---
 - name: azure_rm_resourcegroup_info EE run test
   hosts: localhost
-  gather_facts: false
+#  gather_facts: false
   vars:
     sub_id: ""
   tasks:
