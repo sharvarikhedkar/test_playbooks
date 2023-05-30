@@ -2,10 +2,13 @@
 - name: azure_rm_resourcegroup_info EE run test
   hosts: localhost
   gather_facts: false
+  vars:
+    sub_id: ""
   tasks:
     - name: run the info
       azure.azcollection.azure_rm_resourcegroup_info:
         name: AAPNightlyGroupsk
+        subscription_id: "{{ sub_id }}"
       register: rg_info
 
     - debug: var=rg_info
