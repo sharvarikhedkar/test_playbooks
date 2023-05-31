@@ -6,10 +6,6 @@
     sub_id: ""
     ansible_python_interpreter: /usr/bin/python3
   tasks:
-    - name: Install packaging python package
-      pip:
-        name: packaging
-        executable: pip3
   
     - name: run the info
       azure.azcollection.azure_rm_resourcegroup_info:
