@@ -1,8 +1,23 @@
-- name: Test Azure Connectivity
+- name: Check Azure DNS Resolution & Connectivity
   hosts: localhost
   connection: local
+  gather_facts: no
+
   tasks:
-    - name: Check connectivity to Azure API
-      ansible.builtin.uri:
-        url: https://management.azure.com/
-        return_content: yes
+    - name: Resolve Azure Management DNS
+      ansible.builtin.command: nslookup management.azure.com
+      register: dns_lookup
+      ignore_errors: yes
+
+    - name: Display DNS Lookup Result
+      debug:
+        var: dns_lookup.stdout
+
+    - name: Test Connectivity to Azure API (IPv4 & IPv6)
+      ansible.builtin.command: ping -c 3 management.azure.com
+      register: ping_test
+      ignore_errors: yes
+
+    - name: Show Ping Result
+      debug:
+        var: ping_test.stdout
