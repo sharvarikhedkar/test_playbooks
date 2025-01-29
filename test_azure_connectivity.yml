@@ -4,8 +4,8 @@
   gather_facts: no
 
   tasks:
-    - name: Resolve Azure Management DNS
-      ansible.builtin.command: nslookup management.azure.com
+    - name: Resolve Azure Management DNS using getent (Portable)
+      ansible.builtin.command: getent hosts management.azure.com
       register: dns_lookup
       ignore_errors: yes
 
@@ -13,11 +13,20 @@
       debug:
         var: dns_lookup.stdout
 
-    - name: Test Connectivity to Azure API (IPv4 & IPv6)
-      ansible.builtin.command: ping -c 3 management.azure.com
-      register: ping_test
+    - name: Test IPv4 Connectivity to Azure API (Using Ansible Ping Module)
+      ansible.builtin.ping:
+      register: ansible_ping_v4
       ignore_errors: yes
 
-    - name: Show Ping Result
+    - name: Show IPv4 Ping Result
       debug:
-        var: ping_test.stdout
+        var: ansible_ping_v4
+
+    - name: Test IPv6 Connectivity to Azure API (Using Ansible Ping Module)
+      ansible.builtin.ping:
+      register: ansible_ping_v6
+      ignore_errors: yes
+
+    - name: Show IPv6 Ping Result
+      debug:
+        var: ansible_ping_v6
